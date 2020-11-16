@@ -1,5 +1,6 @@
 package com.example.flyingfish;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -11,6 +12,9 @@ import android.graphics.Typeface;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
+
+import com.shashank.sony.fancygifdialoglib.FancyGifDialog;
+import com.shashank.sony.fancygifdialoglib.FancyGifDialogListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -94,10 +98,10 @@ public class FlyingFishView extends View {
         lifeIncrement = 0.0f;
     }
 
+    @SuppressLint("DrawAllocation")
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-
         setBackgroundResource(backgroundImages.get(bgIncrement / 5));
         bgIncrement++;
         if (bgIncrement == 95) {
@@ -154,14 +158,39 @@ public class FlyingFishView extends View {
             score -= 10;
             redX = redX - 100;
             lifecounterOfFish--;
-            if ((int) score == 0 || lifecounterOfFish == 0) {
-                Toast.makeText(getContext(), "Game Over", Toast.LENGTH_SHORT).show();
-                Intent gameOverIntent = new Intent(getContext(), GameOverActivity.class);
-                gameOverIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                gameOverIntent.putExtra("score", (int) score);
-                gameOverIntent.putExtra("Fish_ID", MainActivity.fishID);
-                getContext().startActivity(gameOverIntent);
-            }
+        }
+        if ((int) score == 0 || lifecounterOfFish == 0) {
+            new FancyGifDialog.Builder(getContext())
+                    .setTitle("You were a bit slow but its Ok") // You can also send title like R.string.from_resources
+                    .setMessage("Want to try again or quit?") // or pass like R.string.description_from_resources
+                    .setNegativeBtnText("Cancel") // or pass it like android.R.string.cancel
+                    .setPositiveBtnBackground(R.color.cardview_shadow_start_color) // or pass it like R.color.positiveButton
+                    .setPositiveBtnText("Ok") // or pass it like android.R.string.ok
+                    .setNegativeBtnBackground(R.color.cardview_shadow_start_color) // or pass it like R.color.negativeButton
+                    .setGifResource(R.drawable.slidefish6)//Pass your Gif here
+                    .isCancellable(true)
+                    .OnPositiveClicked(new FancyGifDialogListener() {
+                        @Override
+                        public void OnClick() {
+                            Intent gameOverIntent = new Intent(getContext(), MainActivity.class);
+                            gameOverIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            gameOverIntent.putExtra("Fish_ID", MainActivity.fishID);
+                            getContext().startActivity(gameOverIntent);
+                        }
+                    })
+                    .OnNegativeClicked(new FancyGifDialogListener() {
+                        @Override
+                        public void OnClick() {
+
+                            Toast.makeText(getContext(), "Game Over", Toast.LENGTH_SHORT).show();
+                            Intent gameOverIntent = new Intent(getContext(), GameOverActivity.class);
+                            gameOverIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            gameOverIntent.putExtra("score", (int) score);
+                            gameOverIntent.putExtra("Fish_ID", MainActivity.fishID);
+                            getContext().startActivity(gameOverIntent);
+                        }
+                    })
+                    .build();
         }
         if (redX < 0) {
             redX = canvasWidth + 23;
@@ -214,4 +243,6 @@ public class FlyingFishView extends View {
         }
         return false;
     }
+
+
 }

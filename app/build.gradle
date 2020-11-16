@@ -30,4 +30,5 @@ dependencies {
     implementation "androidx.cardview:cardview:1.0.0"
     implementation "androidx.viewpager2:viewpager2:1.0.0"
     implementation 'com.makeramen:roundedimageview:2.3.0'
+    implementation 'com.github.Shashank02051997:FancyGifDialog-Android:1.3'
 }
