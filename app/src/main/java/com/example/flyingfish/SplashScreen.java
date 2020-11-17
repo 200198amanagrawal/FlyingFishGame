@@ -23,7 +23,7 @@ public class SplashScreen extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 finally {
-                    Intent startGame = new Intent(SplashScreen.this, GameOverActivity.class);
+                    Intent startGame = new Intent(SplashScreen.this, GameStartToOverActivity.class);
                     startGame.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(startGame);
                     overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);

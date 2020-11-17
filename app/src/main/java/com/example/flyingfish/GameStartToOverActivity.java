@@ -9,7 +9,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class GameOverActivity extends AppCompatActivity {
+import com.shashank.sony.fancygifdialoglib.FancyGifDialog;
+import com.shashank.sony.fancygifdialoglib.FancyGifDialogListener;
+
+public class GameStartToOverActivity extends AppCompatActivity {
 
     Button button;
     ImageView imageView;
@@ -35,7 +38,7 @@ public class GameOverActivity extends AppCompatActivity {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(GameOverActivity.this, FishSlider.class));
+                startActivity(new Intent(GameStartToOverActivity.this, FishSlider.class));
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             }
         });
@@ -45,12 +48,37 @@ public class GameOverActivity extends AppCompatActivity {
         startAgain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent startGame = new Intent(GameOverActivity.this, MainActivity.class);
+                Intent startGame = new Intent(GameStartToOverActivity.this, MainActivity.class);
                 startGame.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startGame.putExtra("Fish_ID", intFishID);
                 startActivity(startGame);
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        new FancyGifDialog.Builder(GameStartToOverActivity.this)
+                .setTitle("Why Leaving so early :'-(")
+                .setMessage("Want to quit or Stay?")
+                .setNegativeBtnText("Stay")
+                .setPositiveBtnBackground(R.color.cardview_shadow_start_color)
+                .setPositiveBtnText("Quit")
+                .setNegativeBtnBackground(R.color.cardview_shadow_start_color)
+                .setGifResource(R.drawable.slidefish6)
+                .isCancellable(true)
+                .OnPositiveClicked(new FancyGifDialogListener() {
+                    @Override
+                    public void OnClick() {
+                        finish();
+                    }
+                }).OnNegativeClicked(new FancyGifDialogListener() {
+            @Override
+            public void OnClick() {
+
+            }
+        })
+                .build();
     }
 }

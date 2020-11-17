@@ -43,7 +43,7 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.SliderView
             @Override
             public void onClick(View v) {
                ImageId=fishes[position];
-                Toast.makeText(holder.imageView.getContext(), "Clicked ImageID:"+ ImageId,
+                Toast.makeText(holder.imageView.getContext(), "Fish Selected",
                         Toast.LENGTH_SHORT).show();
             }
         });

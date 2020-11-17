@@ -16,8 +16,8 @@
         android:roundIcon="@drawable/splash_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".FishSlider"></activity>
-        <activity android:name=".GameOverActivity" />
+        <activity android:name=".FishSlider" android:parentActivityName=".MainActivity"></activity>
+        <activity android:name=".GameStartToOverActivity" />
         <activity android:name=".SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

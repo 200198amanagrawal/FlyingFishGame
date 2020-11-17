@@ -183,7 +183,7 @@ public class FlyingFishView extends View {
                         public void OnClick() {
 
                             Toast.makeText(getContext(), "Game Over", Toast.LENGTH_SHORT).show();
-                            Intent gameOverIntent = new Intent(getContext(), GameOverActivity.class);
+                            Intent gameOverIntent = new Intent(getContext(), GameStartToOverActivity.class);
                             gameOverIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             gameOverIntent.putExtra("score", (int) score);
                             gameOverIntent.putExtra("Fish_ID", MainActivity.fishID);
